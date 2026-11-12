@@ -27,7 +27,8 @@ function createAppliance(api, payload) {
   const lightButtons = payload.light ? payload.light.buttons.map((b) => createLightButton(api, applianceId, b)) : [];
   const tvButtons = payload.tv ? payload.tv.buttons.map((b) => createTvButton(api, applianceId, b)) : [];
   const buttons = [...signals, ...lightButtons, ...tvButtons];
-  return { name, buttons };
+  const aircon = payload.aircon ? createAircon(api, applianceId, payload) : null;
+  return { name, buttons, aircon };
 }
 
 function createSignalButton(api, signal) {
@@ -46,4 +47,17 @@ function createTvButton(api, applianceId, button) {
   const name = button.label;
   const push = () => api.post(`1/appliances/${applianceId}/tv`, `button=${button.name}`);
   return { name, push };
+}
+
+// エアコン: aircon_settings エンドポイントは全フィールド必須。
+// range（モデルが受け付けるモード・温度・風量・風向）と現在の settings を返し、
+// UI 側が選んだ値を send(params) で送信する。
+function createAircon(api, applianceId, payload) {
+  const range = payload.aircon.range;
+  const settings = payload.settings ?? {};
+  const send = (params) => {
+    const body = new URLSearchParams(params).toString();
+    return api.post(`1/appliances/${applianceId}/aircon_settings`, body);
+  };
+  return { range, settings, send };
 }

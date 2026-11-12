@@ -59,6 +59,23 @@
             margin: 8px 0;
         }
 
+        .aircon-selects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 8px;
+            margin: 8px 0;
+        }
+
+        .aircon-temp {
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .aircon-temp sl-select {
+            flex: 1;
+        }
+
         .spinner-container {
             position: relative;
             min-height: 100px;
@@ -97,7 +114,7 @@
                 placeholder="home.nature.global で作成した Nature API Access token を貼り付けてください"></sl-input>
             <span> 　</span>
 
-            <span>エアコン、床暖、などへの操作は未対応です。照明、TV、ユーザ登録したボタン操作のみ対応しています。</span>
+            <span>エアコンの操作に対応しています（運転モード・温度・風量・風向・電源オフ）。照明、TV、ユーザ登録したボタン操作にも対応しています。床暖などは未対応です。</span>
 
         </div>
         <div class="spinner-container">
